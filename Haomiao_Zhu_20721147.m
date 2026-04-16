@@ -42,8 +42,126 @@ clear a;
 
 %% TASK 1 - READ TEMPERATURE DATA, PLOT, AND WRITE TO A LOG FILE [20 MARKS]
 
-% Insert answers here
+% (a) I have finished the sensor wiring and connecting and took a clear photo of the completed wiring, insert it into my Word template
 
+
+%% (b) Initialise Parameters
+a = arduino('COM7','UNO');
+% Acquisition parameters
+duration = 600;               % Total acquisition time (seconds) = 10 minutes
+sample_interval = 1;          % Sampling interval (seconds)
+total_samples = duration / sample_interval;
+% Sensor parameters
+temp_sensor_pin = 'A0';
+V0 = 0.5;                      % Voltage at 0°C (V)
+TC = 0.01;                     % Temperature coefficient (V/°C)
+% Pre-allocate arrays for efficiency
+time_array = zeros(1, total_samples);
+voltage_array = zeros(1, total_samples);
+temperature_array = zeros(1, total_samples);
+
+%% Loop to Acquire Temperature Data
+fprintf('===== TEMPERATURE DATA ACQUISITION STARTED =====\n');
+fprintf('Acquisition Duration: %d seconds | Sampling Interval: %d second\n', duration, sample_interval);
+fprintf('Estimated Completion Time: %s\n', datestr(datetime('now') + seconds(duration)));
+
+for sample_idx = 1:total_samples
+    % Record sample time
+    time_array(sample_idx) = (sample_idx - 1) * sample_interval;
+    % Read voltage from analog pin
+    voltage_array(sample_idx) = readVoltage(a, temp_sensor_pin);
+    % Convert voltage to temperature (°C)
+    temperature_array(sample_idx) = (voltage_array(sample_idx) - V0) / TC;
+    % Print progress to console
+    fprintf('Sample Progress: %d/%d | Time: %ds | Temperature: %.2f°C\n',...
+        sample_idx, total_samples, time_array(sample_idx), temperature_array(sample_idx));
+    % Maintain sampling interval
+    pause(sample_interval);
+end
+
+fprintf('===== TEMPERATURE DATA ACQUISITION COMPLETED =====\n');
+
+% Calculate statistical values
+max_temp = max(temperature_array);
+min_temp = min(temperature_array);
+avg_temp = mean(temperature_array);
+
+% Print statistical results
+fprintf('Statistical Results:\n');
+fprintf('Maximum Temperature: %.2f°C\n', max_temp);
+fprintf('Minimum Temperature: %.2f°C\n', min_temp);
+fprintf('Average Temperature: %.2f°C\n', avg_temp);
+
+
+%% (c) Plot Temperature vs Time Curve
+figure('Name','Capsule Temperature Acquisition Curve');
+plot(time_array, temperature_array, 'b-', 'LineWidth', 1.5);
+grid on;
+xlabel('Time (s)', 'FontSize', 12);
+ylabel('Temperature (°C)', 'FontSize', 12);
+title('10-Minute Temperature Monitoring Curve for Sub-Orbital Capsule', 'FontSize', 14);
+% Save plot image
+saveas(gcf, 'temperature_curve.png');
+fprintf('Temperature curve saved as temperature_curve.png\n');
+% I have inserted this image into Task 1 c) of my Word template
+
+%% (d) Formatted Output to Console (Per Assessment Specification)
+current_date = datestr(datetime('now'), 'mm/dd/yyyy');
+location = ' The University of Nottingham Ningbo China'; 
+
+% Print header
+fprintf('\n');
+fprintf('Data logging initiated - %s Location - %s\n', current_date, location);
+fprintf('\n');
+
+% Print minute-by-minute temperature (0-10 minutes)
+for minute = 0:10
+    sample_point = minute * 60 + 1;
+    if sample_point > total_samples
+        sample_point = total_samples;
+    end
+    current_temp = temperature_array(sample_point);
+    fprintf('Minute\t%d\n', minute);
+    fprintf('Temperature\t%.2f C\n', current_temp);
+    fprintf('\n');
+end
+
+% Print statistical values
+fprintf('Max temp\t%.2f C\n', max_temp);
+fprintf('Min temp\t%.2f C\n', min_temp);
+fprintf('Average temp\t%.2f C\n', avg_temp);
+fprintf('Data logging terminated\n');
+
+%% (d) Write Data to Log File
+file_id = fopen('capsule_temperature.txt', 'w');
+if file_id == -1
+    error('Failed to open log file, check folder permissions!');
+end
+
+% Write formatted content to file
+fprintf(file_id, 'Data logging initiated - %s Location - %s\n', current_date, location);
+fprintf(file_id, '\n');
+for minute = 0:10
+    sample_point = minute * 60 + 1;
+    if sample_point > total_samples
+        sample_point = total_samples;
+    end
+    current_temp = temperature_array(sample_point);
+    fprintf(file_id, 'Minute\t%d\n', minute);
+    fprintf(file_id, 'Temperature\t%.2f C\n', current_temp);
+    fprintf(file_id, '\n');
+end
+fprintf(file_id, 'Max temp\t%.2f C\n', max_temp);
+fprintf(file_id, 'Min temp\t%.2f C\n', min_temp);
+fprintf(file_id, 'Average temp\t%.2f C\n', avg_temp);
+fprintf(file_id, 'Data logging terminated\n');
+
+% Critical: Close the file to save content
+fclose(file_id);
+fprintf('Log file saved as capsule_temperature.txt\n');
+
+% Release Arduino port
+clear a;
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
 
 % Insert answers here
