@@ -8,6 +8,7 @@
 % (a) GitHub
 !git --version
 % Initial commit, add coursework templates.
+% https://github.com/JasonZYP/AERO1005_Coursework2.git
 
 % (b) MATLAB/Arduino configuration
 % I have already downloaded the "MATLAB Support Package for Arduino
