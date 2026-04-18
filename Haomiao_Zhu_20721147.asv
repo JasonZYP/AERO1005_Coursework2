@@ -179,7 +179,7 @@ clear a;
 % using the command 'doc temp_monitor' and briefly explains the function use and purpose.
 % I put the images of the device and the plot and the flow charts into my
 % Word document. Github is really hard to connect, I finished it on
-% 17/4/2026 but i spent an hour to try to send it to Github and I fail.
+% 17/4/2026 but i spent an hour
 
 %% TASK 3 - ALGORITHMS – TEMPERATURE PREDICTION [30 MARKS]
 
@@ -194,22 +194,9 @@ clear a;
 
 % I write some short documentation to be included in my function, which can be retrieved
 % using the command 'doc temp_prediction' and briefly explains the function use and purpose.
-% I put the flow chart into my Word document.
+% I put the images of the device and the plot and the flow charts into my
+% Word document.
 
 %% TASK 4 - REFLECTIVE STATEMENT [5 MARKS]
 
-% In this project, I built a temperature monitoring and warning system for a suborbital capsule using MATLAB and an Arduino. 
-% The system handles real-time temperature collection, live monitoring, rate-of-change prediction, and graded alerts. 
-% I also used Github for version control throughout.
-
-% The biggest challenge as a MATLAB beginner was quickly getting up to speed with hardware communication, function design, 
-% live plotting, and timing control. A particular headache was the conflict between LED blinking and sampling timing — 
-% I fixed it by splitting the timestamp logic so that pause wouldn't mess up the sampling accuracy. On the plus side, 
-% my code is well commented and logically organized. A simple moving average helped smooth out sensor noise, and I stuck closely to the project specs.
-
-% That said, the system does have its limits. The temperature prediction is based on a simple linear model, 
-% so it doesn't handle non-linear environmental changes well. Hardware noise immunity could also be better. 
-% In the future, I'd like to try a Kalman filter for smoother data, use a non-linear model to improve predictions, 
-% and add multiple sensors for redundancy and higher reliability.
-
-% Overall, this project taught me how to approach real engineering problems with code, and really boosted my skills in combining software with hardware.
+% Insert answers here
