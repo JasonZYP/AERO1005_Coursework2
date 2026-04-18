@@ -42,7 +42,8 @@ clear a;
 
 %% TASK 1 - READ TEMPERATURE DATA, PLOT, AND WRITE TO A LOG FILE [20 MARKS]
 
-% (a) I have finished the sensor wiring and connecting and took a clear photo of the completed wiring, insert it into my Word template
+% (a) I have finished the sensor wiring and connecting and took a clear
+% photo of the completed wiring, insert it into my Word template.
 
 
 %% (b) Initialise Parameters
@@ -162,10 +163,22 @@ fprintf('Log file saved as capsule_temperature.txt\n');
 
 % Release Arduino port
 clear a;
+
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
 
-% Insert answers here
+% Initialise Arduino connection
+a = arduino('COM7','UNO');
 
+% Call monitoring function (Press Ctrl+C to stop execution)
+temp_monitor(a);
+
+% Release Arduino port
+clear a;
+
+% I write some short documentation to be included in my function, which can be retrieved
+% using the command 'doc temp_monitor' and briefly explains the function use and purpose.
+% I put the images of the device and the plot and the flow charts into my
+% Word document.
 
 %% TASK 3 - ALGORITHMS – TEMPERATURE PREDICTION [30 MARKS]
 
